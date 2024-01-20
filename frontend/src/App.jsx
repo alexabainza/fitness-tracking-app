@@ -3,7 +3,10 @@ import Navbar from "./Components/Navbar";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
-import AddUser from "./Pages/AddUser";
+import AddUser from "./Pages/User/AddUser";
+import EditUser from "./Pages/User/EditUser"
+import ViewUser from "./Pages/User/ViewUser";
+
 
 function App() {
   return (
@@ -13,6 +16,8 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/addUser" element={<AddUser />}></Route>
+          <Route path="/editUser/:id" element={<EditUser />}></Route>
+          <Route path="/viewUser/:id" element={<ViewUser />}></Route>
 
         </Routes>
       </BrowserRouter>
