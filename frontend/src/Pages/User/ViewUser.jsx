@@ -43,8 +43,14 @@ export default function ViewUser() {
               </ul>
             </div>
           </div>
-          <Link className="btn btn-primary my-2" to="/home">
+          <Link className="btn btn-primary my-2 me-4" to="/home">
             Back to home
+          </Link>
+          <Link className="btn btn-outline-success my-2" to={`/${id}/addExercise`}>
+            Add exercise
+          </Link>
+          <Link className="btn btn-outline-success my-2" to={`/${id}/exercises`}>
+            View exercises
           </Link>
         </div>
       </div>
