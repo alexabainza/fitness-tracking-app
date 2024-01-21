@@ -41,6 +41,7 @@ export default function ViewExercises() {
     <>
       <div className="">
         <h1>{username}'s exercises</h1>
+        <Link className="btn btn-outline-primary" to={`/${id}/addExercise`}>Add exercise</Link>
         {exercises.map((exercise, index) => (
           <div key={exercise.exercise_id}>
             <p>{exercise.exercise_name}</p>
