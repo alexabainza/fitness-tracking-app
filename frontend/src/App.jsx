@@ -22,7 +22,7 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
 
           <Route path="/home" element={<Home />}></Route>
-          <Route path="/addUser" element={<AddUser />}></Route>
+          {/* <Route path="/addUser" element={<AddUser />}></Route> */}
           <Route path="/editUser/:id" element={<EditUser />}></Route>
           <Route path="/viewUser/:id" element={<ViewUser />}></Route>
           <Route path="/:id/addExercise" element={<AddExercise />}></Route>

@@ -4,6 +4,8 @@ import com.fitnessapp.backend.exception.UserNotFoundException;
 import com.fitnessapp.backend.model.User;
 import com.fitnessapp.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,6 +51,19 @@ public class userController {
         userRepository.deleteById(id);
         return "User with ID " + id + " has been deleted successfully";
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@RequestBody User loginUser) {
+        User user = userRepository.findByUsernameAndPassword(loginUser.getUsername(), loginUser.getPassword());
+
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
+
+
 
 
 }
