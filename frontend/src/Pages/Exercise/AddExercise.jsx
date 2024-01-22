@@ -19,9 +19,12 @@ export default function AddExercise() {
   
   const onSubmit = async (e) => {
     e.preventDefault();
+    const formattedDate = new Date(exercise.date_of_exercise).toISOString().split('T')[0].replace(/-/g, '');
+    const session_id = `${id}${formattedDate}`;
+
     await axios.post(`http://localhost:8080/${id}/addExercise`, {
       ...exercise,
-      date_of_exercise: new Date(exercise.date_of_exercise).toISOString().split('T')[0]
+      session_id: session_id
     });
     navigate(`/${id}/exercises`);
   };
