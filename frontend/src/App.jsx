@@ -12,6 +12,7 @@ import { ViewExercise } from "./Pages/Exercise/ViewExercise";
 import Login from "./Pages/Authentication/Login";
 import Register from "./Pages/Authentication/Register";
 import SessionDashboard from "./Pages/Session/SessionDashboard";
+import EditExercise from "./Pages/Exercise/EditExercise";
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
             path="/:user_id/exercise/:exercise_id"
             element={<ViewExercise />}
           ></Route>
+          <Route path="/:user_id/editExercise/:exercise_id" element={<EditExercise />}></Route>
+
         </Routes>
       </BrowserRouter>
     </>

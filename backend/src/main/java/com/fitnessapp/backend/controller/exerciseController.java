@@ -62,6 +62,7 @@ public class exerciseController {
         Exercise existingExercise = exerciseRepository.findByExerciseId(user_id, exercise_id);
 
         if (existingExercise != null) {
+            existingExercise.setSession_id(newExercise.getSession_id());
             existingExercise.setExercise_name(newExercise.getExercise_name());
             existingExercise.setSets(newExercise.getSets());
             existingExercise.setRepetitions(newExercise.getRepetitions());

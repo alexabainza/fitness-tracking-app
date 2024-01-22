@@ -60,7 +60,11 @@ export default function ViewExercises() {
               className="btn btn-outline-danger"
             >
               Delete exercise
+              
             </button>
+            <Link to={`/${user_id}/editExercise/${exercise.exercise_id}`}>
+              <button className="btn btn-outline-primary">Update exercise</button>
+            </Link>
           </div>
         ))}
       </div>
