@@ -9,7 +9,7 @@ export default function Navbar() {
         <Link className="navbar-brand" to="/home">
           Navbar
         </Link>
-        <Link to="/addUser">
+        <Link to="/register">
         <button className="btn btn-outline-light">Add user</button>
 
         </Link>
