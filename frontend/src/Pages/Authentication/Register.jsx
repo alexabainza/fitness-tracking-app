@@ -25,6 +25,7 @@ export default function Register() {
       const response = await axios.post("http://localhost:8080/addUser", user);
 
       if (response.status === 201) {
+        console.log("response: " + response.data);
         const user_id = response.data.id;
         navigate(`/${user_id}/exercises`);
       }

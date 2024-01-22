@@ -7,14 +7,13 @@ import java.util.Date;
 @Entity
 public class ExerciseSession {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long exercise_session_id;
+    private String exercise_session_id;
 
     private Long user_id;
 
     private Date session_date;
 
-    public Long getExercise_session_id() {
+    public String getExercise_session_id() {
         return exercise_session_id;
     }
     public void setExercise_session_id() {
@@ -22,7 +21,7 @@ public class ExerciseSession {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
             String dateString = dateFormat.format(session_date);
 
-            this.exercise_session_id = Long.parseLong(user_id + dateString);
+            this.exercise_session_id = user_id + dateString;
         }
     }
     public Long getUser_id() {

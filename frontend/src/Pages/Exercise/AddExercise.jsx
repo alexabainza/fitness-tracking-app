@@ -26,6 +26,18 @@ export default function AddExercise() {
       ...exercise,
       session_id: session_id
     });
+
+    // const doesSessionExist = await axios.get(
+    //   `http://localhost:8080/${id}/checkSession/${session_id}`
+    // )
+
+
+      await axios.post(`http://localhost:8080/${id}/addSession`, {
+        user_id: id,
+        session_id: session_id,
+        session_date: date_of_exercise
+      });
+    
     navigate(`/${id}/exercises`);
   };
   
