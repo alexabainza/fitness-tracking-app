@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import SessionCard from "../../Components/SessionCard";
 
 export default function SessionDashboard() {
   const [sessions, setSessions] = useState([]);
@@ -28,20 +29,23 @@ export default function SessionDashboard() {
   return (
     <div>
       <h1>{username}</h1>
-      <Link to = {`/${id}/addExercise`} className="btn btn-outline-primary">Add exercise</Link>
+      <Link to={`/${id}/addExercise`} className="btn btn-outline-primary">
+        Add exercise
+      </Link>
+      <div className="d-flex flex-col">
       {sessions.length === 0 ? (
         <p>No sessions available</p>
       ) : (
-        <ul>
+        <ul >
           {sessions.map((session) => (
-            <div key={session.exercise_session_id}>
-              <Link to={`/${id}/${session.exercise_session_id}`}>
-                <h3>{session.session_date}</h3>
-              </Link>
-            </div>
+            <Link to={`/${id}/${session.exercise_session_id}`}>
+              <SessionCard date={session.session_date} key={session.exercise_session_id}></SessionCard>
+            </Link>
           ))}
         </ul>
       )}
+      </div>
+      
     </div>
   );
 }
