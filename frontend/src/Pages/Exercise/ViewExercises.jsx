@@ -5,15 +5,16 @@ import { Link, useParams } from "react-router-dom";
 export default function ViewExercises() {
   const [exercises, setExercises] = useState([]);
   const [username, setUsername] = useState("");
+  const [sessionDate, setSessionDate] = useState(""); // New state for session date
 
-  const { id } = useParams();
+  const { user_id, session_id } = useParams();
 
   useEffect(() => {
     getUser();
   }, []);
 
   const getUser = async () => {
-    const res = await axios.get(`http://localhost:8080/user/${id}`);
+    const res = await axios.get(`http://localhost:8080/user/${user_id}`);
     setUsername(res.data.username);
   };
   useEffect(() => {
@@ -28,8 +29,11 @@ export default function ViewExercises() {
   };
 
   const loadExercises = async () => {
-    const result = await axios.get(`http://localhost:8080/${id}/exercises`);
+    const result = await axios.get(`http://localhost:8080/${user_id}/${session_id}`);
     setExercises(result.data);
+    const extractedDate = session_id.substring(user_id.length); // Assuming user_id is at the beginning
+    const formattedDate = `${extractedDate.substring(0, 4)}-${extractedDate.substring(4, 6)}-${extractedDate.substring(6)}`;
+    setSessionDate(formattedDate)
   };
 
   const formatDate = (dateString) => {
@@ -40,19 +44,19 @@ export default function ViewExercises() {
   return (
     <>
       <div className="">
-        <h1>{username}'s exercises</h1>
-        <Link className="btn btn-outline-primary" to={`/${id}/addExercise`}>Add exercise</Link>
+      <h1>{username}'s exercises on {exercises.length > 0 ? formatDate(exercises[0].date_of_exercise) : formatDate(sessionDate)}</h1>
+        <Link className="btn btn-outline-primary" to={`/${user_id}/addExercise`}>Add exercise</Link>
         {exercises.map((exercise, index) => (
           <div key={exercise.exercise_id}>
             <p>{exercise.exercise_name}</p>
             <p>{exercise.sets}</p>
             <p>{exercise.repetitions}</p>
             <p>{formatDate(exercise.date_of_exercise)}</p>
-            <Link to={`/${id}/exercise/${exercise.exercise_id}`}>
+            <Link to={`/${user_id}/exercise/${exercise.exercise_id}`}>
               <button className="btn btn-outline-primary">View exercise</button>
             </Link>
             <button
-              onClick={() => deleteExercise(id, exercise.exercise_id)}
+              onClick={() => deleteExercise(user_id, exercise.exercise_id)}
               className="btn btn-outline-danger"
             >
               Delete exercise

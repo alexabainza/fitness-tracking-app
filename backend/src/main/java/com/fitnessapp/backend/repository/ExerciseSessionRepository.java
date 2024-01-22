@@ -12,7 +12,7 @@ public interface ExerciseSessionRepository extends JpaRepository<ExerciseSession
 
     @Query("SELECT es FROM ExerciseSession es WHERE es.user_id = :user_id")
     List<ExerciseSession> findUserSessions(@Param("user_id") Long user_id);
-    @Query("SELECT e FROM Exercise e WHERE e.session_id = :session_id")
-    List<Exercise> findExercisesPerSessions(@Param("session_id") String session_id);
+    @Query("SELECT e FROM Exercise e WHERE e.user_id = :user_id AND e.session_id = :session_id")
+    List<Exercise> findExercisesPerSessions(@Param("user_id") Long user_id, @Param("session_id") String session_id);
 
 }

@@ -32,7 +32,7 @@ export default function AddExercise() {
       exercise_session_id: session_id,
       session_date: date_of_exercise
     });
-    navigate(`/${id}/exercises`);
+    navigate(`/${id}/sessions`);
   };
   
 
@@ -101,7 +101,7 @@ export default function AddExercise() {
             <button type="submit" className="btn btn-outline-primary">
               Submit
             </button>
-            <Link to="/home" className="btn btn-outline-danger mx-2">
+            <Link to={`/${id}/sessions`} className="btn btn-outline-danger mx-2">
               Cancel
             </Link>
           </form>

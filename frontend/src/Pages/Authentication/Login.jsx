@@ -22,7 +22,7 @@ export default function Login() {
   
       if (response.status === 200) {
         const user_id = response.data.id;
-        navigate(`/${user_id}/exercises`);
+        navigate(`/${user_id}/sessions`);
       } 
       else {
         setErrorMessage("Invalid username or password. Please try again.");

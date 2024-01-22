@@ -27,7 +27,7 @@ function App() {
           <Route path="/editUser/:id" element={<EditUser />}></Route>
           <Route path="/viewUser/:id" element={<ViewUser />}></Route>
           <Route path="/:id/addExercise" element={<AddExercise />}></Route>
-          <Route path="/:id/exercises" element={<ViewExercises />}></Route>
+          <Route path="/:user_id/:session_id" element={<ViewExercises />}></Route>
           <Route
             path="/:user_id/exercise/:exercise_id"
             element={<ViewExercise />}

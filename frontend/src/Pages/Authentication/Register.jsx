@@ -27,7 +27,7 @@ export default function Register() {
       if (response.status === 201) {
         console.log("response: " + response.data);
         const user_id = response.data.id;
-        navigate(`/${user_id}/exercises`);
+        navigate(`/${user_id}/sessions`);
       }
     } catch (error) {
       setErrorMessage(error.response.data);

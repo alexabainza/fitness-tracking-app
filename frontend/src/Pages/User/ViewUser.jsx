@@ -49,7 +49,7 @@ export default function ViewUser() {
           <Link className="btn btn-outline-success my-2" to={`/${id}/addExercise`}>
             Add exercise
           </Link>
-          <Link className="btn btn-outline-success my-2" to={`/${id}/exercises`}>
+          <Link className="btn btn-outline-success my-2" to={`/${id}/sessions`}>
             View exercises
           </Link>
         </div>

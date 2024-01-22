@@ -46,9 +46,9 @@ public class exerciseSessionController {
         return ResponseEntity.ok(userExerciseSessions);
     }
 
-    @GetMapping("/{session_id}")
-    ResponseEntity<List<Exercise>> getUserSessions(@PathVariable String session_id) {
-        List<Exercise> userExercisePerSessions = exerciseSessionRepository.findExercisesPerSessions( session_id);
+    @GetMapping("/{user_id}/{session_id}")
+    ResponseEntity<List<Exercise>> getUserExercisePerSessions(@PathVariable Long user_id, @PathVariable String session_id) {
+        List<Exercise> userExercisePerSessions = exerciseSessionRepository.findExercisesPerSessions(user_id, session_id);
 
         return ResponseEntity.ok(userExercisePerSessions);
     }

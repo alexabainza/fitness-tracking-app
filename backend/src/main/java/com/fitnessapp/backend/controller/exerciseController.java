@@ -33,6 +33,20 @@ public class exerciseController {
         return exerciseRepository.save(newExercise);
     }
 
+    @PostMapping("/{user_id}/{session_id}/addExercise")
+    Exercise newExercise(@RequestBody Exercise newExercise, @PathVariable Long user_id, @PathVariable String session_id){
+//        Long userId = newExercise.getUser_id();
+        if (!userRepository.existsById(user_id)) {
+            throw new UserNotFoundException(user_id);
+        }
+
+        // Set the user_id for the new exercise
+        newExercise.setUser_id(user_id);
+
+        return exerciseRepository.save(newExercise);
+    }
+
+
     @GetMapping("/{user_id}/exercises")
     List<Exercise> getExercisesByUserId(@PathVariable Long user_id) {
         return exerciseRepository.findByUserId(user_id);
