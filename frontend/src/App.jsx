@@ -11,6 +11,7 @@ import ViewExercises from "./Pages/Exercise/ViewExercises";
 import { ViewExercise } from "./Pages/Exercise/ViewExercise";
 import Login from "./Pages/Authentication/Login";
 import Register from "./Pages/Authentication/Register";
+import SessionDashboard from "./Pages/Session/SessionDashboard";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
 
           <Route path="/home" element={<Home />}></Route>
-          {/* <Route path="/addUser" element={<AddUser />}></Route> */}
+          <Route path="/:id/sessions" element={<SessionDashboard />}></Route>
           <Route path="/editUser/:id" element={<EditUser />}></Route>
           <Route path="/viewUser/:id" element={<ViewUser />}></Route>
           <Route path="/:id/addExercise" element={<AddExercise />}></Route>

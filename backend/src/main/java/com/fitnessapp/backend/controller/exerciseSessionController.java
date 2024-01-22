@@ -1,5 +1,6 @@
 package com.fitnessapp.backend.controller;
 
+import com.fitnessapp.backend.model.Exercise;
 import com.fitnessapp.backend.model.ExerciseSession;
 import com.fitnessapp.backend.model.User;
 import com.fitnessapp.backend.repository.ExerciseRepository;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:5173/")
@@ -26,13 +29,29 @@ public class exerciseSessionController {
         if (exerciseSessionRepository.existsById(sessionId)) {
             return ResponseEntity.status(HttpStatus.CREATED).body("Session ID already exists");
         }
-
-        // Set the user ID and save the exercise session
         newExerciseSession.setUser_id(newExerciseSession.getUser_id());
         ExerciseSession savedExerciseSession = exerciseSessionRepository.save(newExerciseSession);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedExerciseSession);
     }
 
+    @GetMapping("/{user_id}/getSessions")
+    ResponseEntity<List<ExerciseSession>> getUserSessions(@PathVariable Long user_id) {
+        List<ExerciseSession> userExerciseSessions = exerciseSessionRepository.findUserSessions(user_id);
+
+        if (userExerciseSessions.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Or return an appropriate message
+        }
+
+        return ResponseEntity.ok(userExerciseSessions);
     }
+
+    @GetMapping("/{session_id}")
+    ResponseEntity<List<Exercise>> getUserSessions(@PathVariable String session_id) {
+        List<Exercise> userExercisePerSessions = exerciseSessionRepository.findExercisesPerSessions( session_id);
+
+        return ResponseEntity.ok(userExercisePerSessions);
+    }
+
+}
 

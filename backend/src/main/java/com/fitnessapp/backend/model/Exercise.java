@@ -17,6 +17,7 @@ public class Exercise {
 
     private String exercise_name;
     private int sets;
+    private String session_id;
 
     private int repetitions;
 
@@ -30,7 +31,6 @@ public class Exercise {
         this.session_id = session_id;
     }
 
-    private String session_id;
 
 
     public Long getExercise_id() {
