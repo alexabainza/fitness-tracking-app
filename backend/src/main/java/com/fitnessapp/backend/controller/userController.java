@@ -16,9 +16,21 @@ public class userController {
     private UserRepository userRepository;
 
     @PostMapping("/addUser")
-    User newUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
+    ResponseEntity<String> newUser(@RequestBody User newUser) {
+        // Check if the username or email already exists
+        if (userRepository.existsByUsername(newUser.getUsername())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
+        }
+
+        if (userRepository.existsByEmail(newUser.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
+        }
+
+        // If username and email are unique, proceed with user registration
+        User savedUser = userRepository.save(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully. ID: " + savedUser.getId());
     }
+
 
     @GetMapping("/users")
     List<User> getAllUsers(){

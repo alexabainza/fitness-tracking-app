@@ -24,10 +24,6 @@ export default function Login() {
         const user_id = response.data.id;
         navigate(`/${user_id}/exercises`);
       } 
-      else if(error.response.status === 401){
-        setErrorMessage("User not found. Please register first.");
-
-      }
       else {
         setErrorMessage("Invalid username or password. Please try again.");
       }

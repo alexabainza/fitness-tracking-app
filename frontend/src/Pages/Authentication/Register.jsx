@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 export default function Register() {
   let navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -14,13 +15,22 @@ export default function Register() {
   const { username, email, password, birthday } = user;
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+    setErrorMessage("");
+
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:8080/addUser", user);
-    const user_id = response.data.id;
-    navigate(`/${user_id}/exercises`);
+    try {
+      const response = await axios.post("http://localhost:8080/addUser", user);
+
+      if (response.status === 201) {
+        const user_id = response.data.id;
+        navigate(`/${user_id}/exercises`);
+      }
+    } catch (error) {
+      setErrorMessage(error.response.data);
+    }
   };
 
   return (
@@ -80,6 +90,11 @@ export default function Register() {
                 onChange={(e) => onInputChange(e)}
               />
             </div>
+            {errorMessage && (
+              <div className="alert alert-danger" role="alert">
+                {errorMessage}
+              </div>
+            )}
             <button type="submit" className="btn btn-outline-primary">
               Register
             </button>
