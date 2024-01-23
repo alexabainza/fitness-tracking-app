@@ -16,7 +16,6 @@ export default function Register() {
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
     setErrorMessage("");
-
   };
 
   const onSubmit = async (e) => {
@@ -38,11 +37,11 @@ export default function Register() {
     <div className="container">
       <div className="row">
         <div className="col-md-4 offset-md-4 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center m-4">Register User</h2>
+          <h2 className="text-center m-3">Register User</h2>
           <form onSubmit={(e) => onSubmit(e)}>
-            <div className="mb-3">
-              <label htmlFor="Username" className="form-label">
-                Username
+          <div className="mb-2">
+              <label htmlFor="Username" className="form-labeform-label mb-1">
+                <small>Username</small>{" "}
               </label>
               <input
                 type="text"
@@ -53,9 +52,9 @@ export default function Register() {
                 onChange={(e) => onInputChange(e)}
               ></input>
             </div>
-            <div className="mb-3">
-              <label htmlFor="Email" className="form-label">
-                Email
+            <div className="mb-2">
+              <label htmlFor="Email" className="form-label mb-1">
+                <small>Email</small>
               </label>
               <input
                 type="text"
@@ -66,9 +65,9 @@ export default function Register() {
                 onChange={(e) => onInputChange(e)}
               ></input>
             </div>
-            <div className="mb-3">
-              <label htmlFor="Password" className="form-label">
-                Password
+            <div className="mb-2">
+              <label htmlFor="Password" className="form-label mb-1">
+                <small>Password</small>{" "}
               </label>
               <input
                 type="password"
@@ -80,8 +79,8 @@ export default function Register() {
               ></input>
             </div>
             <div className="mb-3">
-              <label htmlFor="birthday" className="form-label">
-                Birthday
+              <label htmlFor="birthday" className="form-label mb-1">
+                <small>Birthday</small>{" "}
               </label>
               <input
                 type="date"
@@ -96,7 +95,7 @@ export default function Register() {
                 {errorMessage}
               </div>
             )}
-            <button type="submit" className="btn btn-outline-primary">
+            <button type="submit" className="btn btn-outline-primary mb-3 col-12">
               Register
             </button>
           </form>
@@ -107,7 +106,8 @@ export default function Register() {
                 to="/login"
                 style={{ textDecoration: "none", color: "red" }}
               >
-                {" "}here
+                {" "}
+                here
               </Link>
             </span>
           </small>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import ExerciseComponent from "../../Components/ExerciseComponent";
 
 export default function ViewExercises() {
   const [exercises, setExercises] = useState([]);
@@ -43,30 +44,16 @@ export default function ViewExercises() {
 
   return (
     <>
-      <div className="">
-      <h1>{username}'s exercises on {exercises.length > 0 ? formatDate(exercises[0].date_of_exercise) : formatDate(sessionDate)}</h1>
-        <Link className="btn btn-outline-primary" to={`/${user_id}/addExercise`}>Add exercise</Link>
-        {exercises.map((exercise, index) => (
-          <div key={exercise.exercise_id}>
-            <p>{exercise.exercise_name}</p>
-            <p>{exercise.sets}</p>
-            <p>{exercise.repetitions}</p>
-            <p>{formatDate(exercise.date_of_exercise)}</p>
-            <Link to={`/${user_id}/exercise/${exercise.exercise_id}`}>
-              <button className="btn btn-outline-primary">View exercise</button>
-            </Link>
-            <button
-              onClick={() => deleteExercise(user_id, exercise.exercise_id)}
-              className="btn btn-outline-danger"
-            >
-              Delete exercise
-              
-            </button>
-            <Link to={`/${user_id}/editExercise/${exercise.exercise_id}`}>
-              <button className="btn btn-outline-primary">Update exercise</button>
-            </Link>
-          </div>
-        ))}
+      <div className="mx-5 my-3">
+      <h1>Your exercises on <span className="text-danger">{exercises.length > 0 ? formatDate(exercises[0].date_of_exercise) : formatDate(sessionDate)}</span></h1>
+        <Link className="btn btn-outline-primary mb-4" to={`/${user_id}/addExercise`}>Add exercise</Link>
+        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+          {exercises.map((exercise) => (
+            <div className="col mb-4" key={exercise.exercise_id}>
+              <ExerciseComponent exercise={exercise} onDelete={() => deleteExercise(exercise.exercise_id)} />
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

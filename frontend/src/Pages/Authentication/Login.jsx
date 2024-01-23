@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 export default function Login() {
-    const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -16,15 +16,14 @@ export default function Login() {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await axios.post("http://localhost:8080/login", user);
-  
+
       if (response.status === 200) {
         const user_id = response.data.id;
         navigate(`/${user_id}/sessions`);
-      } 
-      else {
+      } else {
         setErrorMessage("Invalid username or password. Please try again.");
       }
     } catch (error) {
@@ -38,18 +37,18 @@ export default function Login() {
       }
     }
   };
-  
+
   return (
     <div
       className="container d-flex align-items-center justify-content-center mt-5"
       style={{ maxHeight: "100vh" }}
     >
       <div className="col-md-4 border rounded p-4">
-        <h2 className="text-center m-4">Login</h2>
+        <h2 className="text-center m-3">Login</h2>
         <form onSubmit={onLogin}>
-          <div className="mb-3">
-            <label htmlFor="Username" className="form-label">
-              Username
+          <div className="mb-2">
+            <label htmlFor="Username" className="form-label mb-1">
+              <small>Username</small>
             </label>
             <input
               type="text"
@@ -61,8 +60,8 @@ export default function Login() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="Password" className="form-label">
-              Password
+            <label htmlFor="Password" className="form-label mb-1">
+              <small>Password</small>{" "}
             </label>
             <input
               type="password"
@@ -79,10 +78,7 @@ export default function Login() {
             </div>
           )}
           <div className="text-center mb-3">
-            <button
-              type="submit"
-              className="btn btn-outline-primary mx-2"
-            >
+            <button type="submit" className="btn btn-outline-primary btn-block col-12">
               Login
             </button>
           </div>
