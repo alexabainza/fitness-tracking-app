@@ -8,21 +8,23 @@ export default function SessionCard({ date, onClick }) {
   });
   return (
     <div
-      className="date-card rounded d-flex align-items-center border border-outline-black px-5 py-2 justify-content-between mb-4"
-      style={{ width: "80vw", height: "14vh",   backgroundColor: "rgba(127, 255, 212, 0.712)"
+    className="date-card rounded d-flex align-items-center border border-red px-5 py-2 justify-content-between mb-4"
+    style={{ width: "80vw", height: "14vh", borderWidth: "6px"
     }}
       onClick={onClick}
     >
       <div
         className="date-text"
         style={{
-          fontSize: "24px",
+          fontSize: "20px",
           width: "60%",
           textDecoration: "none",
+          color: "black"
 
         }}
       >
-        {formattedDate}
+        <p>        {formattedDate}
+</p>
       </div>{" "}
       <div className="buttons-container">
         <button

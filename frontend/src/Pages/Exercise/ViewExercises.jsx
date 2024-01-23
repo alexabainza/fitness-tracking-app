@@ -45,15 +45,23 @@ export default function ViewExercises() {
   return (
     <>
       <div className="mx-5 my-3">
-      <h1>Your exercises on <span className="text-danger">{exercises.length > 0 ? formatDate(exercises[0].date_of_exercise) : formatDate(sessionDate)}</span></h1>
-        <Link className="btn btn-outline-primary mb-4" to={`/${user_id}/addExercise`}>Add exercise</Link>
-        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4">
-          {exercises.map((exercise) => (
-            <div className="col mb-4" key={exercise.exercise_id}>
-              <ExerciseComponent exercise={exercise} onDelete={() => deleteExercise(exercise.exercise_id)} />
+      <h1 className="mb-2">Your exercises on <span className="text-danger">{exercises.length > 0 ? formatDate(exercises[0].date_of_exercise) : formatDate(sessionDate)}</span></h1>
+      <Link className="btn btn-outline-primary mb-4" to={`/${user_id}/addExercise`}>Add exercise</Link>
+
+      {exercises.length > 0 ? (
+          <>
+          
+            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+              {exercises.map((exercise) => (
+                <div className="col mb-4" key={exercise.exercise_id}>
+                <ExerciseComponent exercise={exercise} onDelete={() => deleteExercise(user_id, exercise.exercise_id)} />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        ) : (
+          <p>You have no exercises on {formatDate(sessionDate)}</p>
+        )}
       </div>
     </>
   );
