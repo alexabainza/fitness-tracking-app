@@ -57,7 +57,7 @@ export default function AddExercise() {
   return (
     <div className="">
       <UserNavbar id={id} username={user.username} />
-      <div className="row">
+      <div className="">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-4">Add Exercise</h2>
           <form onSubmit={(e) => onSubmit(e)}>

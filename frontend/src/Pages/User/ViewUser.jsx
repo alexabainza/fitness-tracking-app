@@ -22,7 +22,7 @@ export default function ViewUser() {
     <div className="">
       <UserNavbar id={id} username={user.username} />
 
-      <div className="row">
+      <div className="">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center mt-2 mb-3">
             <span style={{ color: "red" }}>{user.username}'s</span> details

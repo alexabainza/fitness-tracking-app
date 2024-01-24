@@ -8,9 +8,15 @@ export default function UserNavbar({id, username}) {
         <Link className="navbar-brand" to="/home">
           <strong>Fitness App</strong>
         </Link>
+        <div>
         <Link to={`/viewUser/${id}`}>
           <button className="btn btn-outline-light">{username}</button>
         </Link>
+        <Link to={"/login"}>
+          <button className="btn btn-outline-* text-white">Logout</button>
+        </Link>
+        </div>
+
       </nav>
     </div>
   );
