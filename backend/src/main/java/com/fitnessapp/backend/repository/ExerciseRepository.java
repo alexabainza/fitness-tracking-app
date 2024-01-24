@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -21,5 +22,8 @@ List<Exercise> findByUserId(Long user_id);
     @Modifying
     @Query("DELETE FROM Exercise e WHERE e.user_id = :user_id AND e.exercise_id = :exercise_id")
     void deleteByExerciseId(Long user_id, Long exercise_id);
-
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Exercise e WHERE e.user_id = :user_id AND e.session_id = :session_id")
+    void deleteExercisesBySessionId(@Param("user_id") Long user_id, @Param("session_id") String session_id);
 }

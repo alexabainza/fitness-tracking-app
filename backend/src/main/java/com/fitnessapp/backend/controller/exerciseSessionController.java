@@ -53,5 +53,23 @@ public class exerciseSessionController {
         return ResponseEntity.ok(userExercisePerSessions);
     }
 
+    @DeleteMapping("/{user_id}/{session_id}")
+    ResponseEntity<?> deleteSession(@PathVariable Long user_id, @PathVariable String session_id) {
+        if (!userRepository.existsById(user_id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        ExerciseSession existingSession = exerciseSessionRepository.findById(session_id).orElse(null);
+        if (existingSession == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Session not found");
+        }
+
+        exerciseRepository.deleteExercisesBySessionId(user_id, session_id);
+
+        exerciseSessionRepository.deleteById(session_id);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Session and associated exercises deleted successfully");
+    }
+
 }
 

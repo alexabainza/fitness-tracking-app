@@ -26,6 +26,13 @@ export default function SessionDashboard() {
     setSessions(res.data);
   };
 
+  const handleDeleteSession = async (user_id, session_id) => {
+
+      await axios.delete(`http://localhost:8080/${user_id}/${session_id}`);
+      getSessions();
+  }
+
+
   return (
     <div className="mx-5 my-3">
       <div className="d-flex justify-content-between">
@@ -47,12 +54,12 @@ export default function SessionDashboard() {
         ) : (
           <ul>
             {sessions.map((session) => (
-              <Link to={`/${id}/${session.exercise_session_id}`}>
                 <SessionCard
                   date={session.session_date}
                   key={session.exercise_session_id}
-                ></SessionCard>
-              </Link>
+                  session={session}
+                  onDelete={() => handleDeleteSession(id, session.exercise_session_id)}
+                  ></SessionCard>
             ))}
           </ul>
         )}

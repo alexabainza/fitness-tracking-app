@@ -2,7 +2,9 @@ package com.fitnessapp.backend.repository;
 
 import com.fitnessapp.backend.model.Exercise;
 import com.fitnessapp.backend.model.ExerciseSession;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
