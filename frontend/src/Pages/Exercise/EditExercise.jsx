@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
+import UserNavbar from "../../Components/UserNavbar";
 
 export default function EditExercise() {
   const navigate = useNavigate();
@@ -13,7 +14,15 @@ export default function EditExercise() {
   const { user_id, exercise_id } = useParams();
   const { exercise_name, repetitions, sets, date_of_exercise } = exercise;
   const [updatedSessionID, setUpdatedSessionID] = useState("");
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    getUser();
+  }, []);
 
+  const getUser = async () => {
+    const res = await axios.get(`http://localhost:8080/user/${user_id}`);
+    setUsername(res.data.username);
+  };
   const onInputChange = (e) => {
     setExercise({ ...exercise, [e.target.name]: e.target.value });
     updateSessionID(e.target.value);
@@ -68,7 +77,9 @@ export default function EditExercise() {
   };
 
   return (
-    <div className="container">
+    <div className="">
+          <UserNavbar username={username} />
+
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-4">Add Exercise</h2>

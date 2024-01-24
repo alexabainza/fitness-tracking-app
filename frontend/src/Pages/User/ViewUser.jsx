@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import UserNavbar from "../../Components/UserNavbar";
 export default function ViewUser() {
   const [user, setUser] = useState({
     username: "",
@@ -18,24 +19,25 @@ export default function ViewUser() {
     setUser(result.data);
   };
   return (
-    <div className="container">
+    <div className="">
+      <UserNavbar id={id} username={user.username} />
+
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center mt-2 mb-3"><span style={{color:"red"}}>{user.username}'s</span> details</h2>
+          <h2 className="text-center mt-2 mb-3">
+            <span style={{ color: "red" }}>{user.username}'s</span> details
+          </h2>
           <div className="card mb-4">
             <div className="card-header">
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">
-                  <b>Username:</b>{" "}
-                  {user.username}
+                  <b>Username:</b> {user.username}
                 </li>
                 <li className="list-group-item">
-                  <b>Email:</b>{" "}
-                  {user.email}
+                  <b>Email:</b> {user.email}
                 </li>
                 <li className="list-group-item">
-                  <b>Birthday:</b>{" "}
-                  {user.birthday}
+                  <b>Birthday:</b> {user.birthday}
                 </li>
               </ul>
             </div>

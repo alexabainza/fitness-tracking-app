@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Navbar from "../../Components/Navbar";
 
 export default function Register() {
   let navigate = useNavigate();
@@ -34,8 +35,10 @@ export default function Register() {
   };
 
   return (
-    <div className="container">
-      <div className="row">
+    <div>
+      <Navbar />
+
+      <div className="">
         <div className="col-md-4 offset-md-4 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-3">Register User</h2>
           <form onSubmit={(e) => onSubmit(e)}>

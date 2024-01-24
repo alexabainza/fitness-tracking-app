@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import UserNavbar from "../../Components/UserNavbar";
 
 export const ViewExercise = () => {
   const [exercise, setExercise] = useState({});
@@ -28,7 +29,10 @@ export const ViewExercise = () => {
   console.log(exercise);
 
   return (
+    
     <div>
+          <UserNavbar id={id} username={username} />
+
       <h1>{username}'s exercises</h1>
 
       <h1>

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ExerciseComponent from "../../Components/ExerciseComponent";
-
+import UserNavbar from "../../Components/UserNavbar"; 
 export default function ViewExercises() {
   const [exercises, setExercises] = useState([]);
   const [username, setUsername] = useState("");
@@ -44,6 +44,10 @@ export default function ViewExercises() {
 
   return (
     <>
+    <div>
+    <UserNavbar username={username} />
+
+    </div>
       <div className="mx-5 my-3">
       <h1 className="mb-2">Your exercises on <span className="text-danger">{exercises.length > 0 ? formatDate(exercises[0].date_of_exercise) : formatDate(sessionDate)}</span></h1>
       <Link className="btn btn-outline-primary mb-4" to={`/${user_id}/addExercise`}>Add exercise</Link>

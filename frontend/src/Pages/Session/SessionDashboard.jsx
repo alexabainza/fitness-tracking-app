@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import SessionCard from "../../Components/SessionCard";
+import UserNavbar from "../../Components/UserNavbar";
 
 export default function SessionDashboard() {
   const [sessions, setSessions] = useState([]);
@@ -29,11 +30,14 @@ export default function SessionDashboard() {
   const handleDeleteSession = async (user_id, session_id) => {
 
       await axios.delete(`http://localhost:8080/${user_id}/${session_id}`);
-      getSessions();
+      await getSessions();
   }
 
 
   return (
+    <div>
+    <UserNavbar id={id} username={username} />
+
     <div className="mx-5 my-3">
       <div className="d-flex justify-content-between">
         <h1>
@@ -58,12 +62,13 @@ export default function SessionDashboard() {
                   date={session.session_date}
                   key={session.exercise_session_id}
                   session={session}
-                  onDelete={() => handleDeleteSession(id, session.exercise_session_id)}
+                  onDelete={() => handleDeleteSession(session.user_id, session.exercise_session_id)}
                   ></SessionCard>
             ))}
           </ul>
         )}
       </div>
+    </div>
     </div>
   );
 }
