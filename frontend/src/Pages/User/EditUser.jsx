@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import UserNavbar from '../../Components/UserNavbar';
 
 export default function EditUser() {
     let navigate = useNavigate();
@@ -34,10 +35,11 @@ export default function EditUser() {
     }
   
     return (
-      <div className="container">
-        <div className="row">
+      <div>
+        <UserNavbar username={username}/>
+        <div>
           <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-            <h2 className="text-center m-4">Register User</h2>
+            <h2 className="text-center m-4">Edit User</h2>
             <form onSubmit={(e) => onSubmit(e)}>
               <div className="mb-3">
                 <label htmlFor="Username" className="form-label">

@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import UserNavbar from "../../Components/UserNavbar";
 
 export default function EditExercise() {
   const navigate = useNavigate();
@@ -14,15 +13,7 @@ export default function EditExercise() {
   const { user_id, exercise_id } = useParams();
   const { exercise_name, repetitions, sets, date_of_exercise } = exercise;
   const [updatedSessionID, setUpdatedSessionID] = useState("");
-  const [username, setUsername] = useState("");
-  useEffect(() => {
-    getUser();
-  }, []);
 
-  const getUser = async () => {
-    const res = await axios.get(`http://localhost:8080/user/${user_id}`);
-    setUsername(res.data.username);
-  };
   const onInputChange = (e) => {
     setExercise({ ...exercise, [e.target.name]: e.target.value });
     updateSessionID(e.target.value);
@@ -36,12 +27,23 @@ export default function EditExercise() {
     const newSessionID = `${user_id}${formattedDate}`;
     console.log("New Session ID:", newSessionID);
 
-    setUpdatedSessionID((prevSessionID) => {
-      return newSessionID;
-    });
+    if (newDate !== exercise.date_of_exercise) {
+      setUpdatedSessionID(newSessionID);
+    }
+    else{
+      setUpdatedSessionID(exercise.session_id)
+
+    }
+
   };
 
-  console.log("Updated id:" + updatedSessionID);
+  useEffect(() => {
+    console.log("Exercise changed:", exercise);
+  }, [exercise]);
+
+  useEffect(() => {
+    console.log("Updated id:", updatedSessionID);
+  }, [updatedSessionID]);
 
   useEffect(() => {
     loadExercise();
@@ -77,9 +79,7 @@ export default function EditExercise() {
   };
 
   return (
-    <div className="">
-          <UserNavbar username={username} />
-
+    <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-4">Add Exercise</h2>

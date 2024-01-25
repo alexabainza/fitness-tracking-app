@@ -53,7 +53,6 @@ export default function AddExercise() {
     navigate(`/${id}/sessions`);
   };
 
-  console.log("usernme is " + user);
   return (
     <div className="">
       <UserNavbar id={id} username={user.username} />

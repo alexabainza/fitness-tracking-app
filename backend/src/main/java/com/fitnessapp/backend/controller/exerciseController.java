@@ -62,7 +62,9 @@ public class exerciseController {
         Exercise existingExercise = exerciseRepository.findByExerciseId(user_id, exercise_id);
 
         if (existingExercise != null) {
-            existingExercise.setSession_id(newExercise.getSession_id());
+            if (newExercise.getSession_id() != null && !newExercise.getSession_id().isEmpty()) {
+                existingExercise.setSession_id(newExercise.getSession_id());
+            }
             existingExercise.setExercise_name(newExercise.getExercise_name());
             existingExercise.setSets(newExercise.getSets());
             existingExercise.setRepetitions(newExercise.getRepetitions());
@@ -74,6 +76,7 @@ public class exerciseController {
         }
 
     }
+
 
     @DeleteMapping("/{user_id}/exercise/{exercise_id}")
     String deleteExercise(@PathVariable Long user_id, @PathVariable Long exercise_id){
