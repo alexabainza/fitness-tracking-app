@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
+import UserNavbar from "../../Components/UserNavbar";
 
 export default function EditExercise() {
   const navigate = useNavigate();
@@ -35,6 +36,19 @@ export default function EditExercise() {
 
     }
 
+  };
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    birthday: "",
+  });
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+  const loadUser = async () => {
+    const result = await axios.get(`http://localhost:8080/user/${user_id}`);
+    setUser(result.data);
   };
 
   useEffect(() => {
@@ -78,11 +92,13 @@ export default function EditExercise() {
     navigate(`/${user_id}/sessions`);
   };
 
+  console.log(user);
   return (
-    <div className="container">
-      <div className="row">
+    <div>
+      <UserNavbar username={user.username}/>
+      <div>
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center m-4">Add Exercise</h2>
+          <h2 className="text-center m-4">Edit Exercise</h2>
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="mb-3">
               <label htmlFor="Exercise" className="form-label">
