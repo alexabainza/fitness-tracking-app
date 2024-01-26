@@ -45,7 +45,7 @@ export default function ViewExercises() {
   return (
     <>
     <div>
-    <UserNavbar username={username} />
+    <UserNavbar id={user_id} username={username} />
 
     </div>
       <div className="mx-5 my-3">

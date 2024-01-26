@@ -39,18 +39,18 @@ export default function SessionDashboard() {
     <UserNavbar id={id} username={username} />
 
     <div className="mx-5 my-3">
-      <div className="d-flex justify-content-between">
+      <div className="d-flex flex-column justify-content-between">
         <h1>
           Hi, <span style={{ color: "blue" }}>{username}</span>!
         </h1>
         <Link
           to={`/${id}/addExercise`}
-          className="btn btn-outline-primary align-items-center"
+          className="btn btn-outline-primary align-items-center" style={{width: "10%"}}
         >
           Add exercise
         </Link>
       </div>
-      <p>Here are your exercise sessions:</p>
+      <p className="mt-3">Here are your exercise sessions:</p>
 
       <div className="d-flex flex-col">
         {sessions.length === 0 ? (

@@ -10,11 +10,16 @@ export default function UserNavbar({id, username}) {
         </Link>
         <div>
         <Link to={`/viewUser/${id}`}>
-          <button className="btn btn-outline-light">{username}</button>
+          <button className="btn btn-outline-light me-2">{username}</button>
+        </Link>
+        <Link to={`/${id}/sessions`}>
+        <button className="btn btn-outline-* text-white">Dashboard</button>
+
         </Link>
         <Link to={"/login"}>
           <button className="btn btn-outline-* text-white">Logout</button>
         </Link>
+        
         </div>
 
       </nav>

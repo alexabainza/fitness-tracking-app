@@ -48,17 +48,18 @@ export default function ViewUser() {
             </Link>
             <div>
               <Link
-                className="btn btn-outline-success my-2 me-4"
-                to={`/${id}/addExercise`}
+                className="btn btn-outline-success my-2 me-2"
+                to={`/editUser/${id}`}
               >
-                Add exercise
+                Edit Profile
               </Link>
               <Link
-                className="btn btn-outline-success my-2"
+                className="btn btn-outline-success my-2 me-2"
                 to={`/${id}/sessions`}
               >
                 View exercises
               </Link>
+              <button className="btn btn-outline-danger ">Delete Profile</button>
             </div>
           </div>
         </div>
