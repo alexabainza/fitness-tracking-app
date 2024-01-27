@@ -1,7 +1,11 @@
 package com.fitnessapp.backend.controller;
 
 import com.fitnessapp.backend.exception.UserNotFoundException;
+import com.fitnessapp.backend.model.Exercise;
+import com.fitnessapp.backend.model.ExerciseSession;
 import com.fitnessapp.backend.model.User;
+import com.fitnessapp.backend.repository.ExerciseRepository;
+import com.fitnessapp.backend.repository.ExerciseSessionRepository;
 import com.fitnessapp.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +18,11 @@ import java.util.List;
 public class userController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ExerciseRepository exerciseRepository;
+    @Autowired
+    private ExerciseSessionRepository exerciseSessionRepository;
+
 
     @PostMapping("/addUser")
     ResponseEntity<?> newUser(@RequestBody User newUser) {
@@ -55,15 +64,6 @@ public class userController {
                 }).orElseThrow(()->new UserNotFoundException(id));
     }
 
-    @DeleteMapping("/user/{id}")
-    String deleteUser(@PathVariable Long id){
-        if(!userRepository.existsById(id)){
-            throw new UserNotFoundException(id);
-        }
-        userRepository.deleteById(id);
-        return "User with ID " + id + " has been deleted successfully";
-    }
-
     @PostMapping("/login")
     public ResponseEntity<User> loginUser(@RequestBody User loginUser) {
         User user = userRepository.findByUsernameAndPassword(loginUser.getUsername(), loginUser.getPassword());
@@ -75,7 +75,28 @@ public class userController {
         }
     }
 
+    @DeleteMapping("/user/{id}")
+    String deleteUser(@PathVariable Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException(id);
+        }
 
+        // Fetch the user
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
 
+        // Fetch and delete exercise sessions
+        List<ExerciseSession> exerciseSessions = exerciseSessionRepository.findByUserId(id);
+        for (ExerciseSession exerciseSession : exerciseSessions) {
+            // Fetch and delete exercises for each exercise session
+            List<Exercise> exercises = exerciseRepository.findByUserId(id);
+            exerciseRepository.deleteAll(exercises);
+        }
+        exerciseSessionRepository.deleteAll(exerciseSessions);
 
+        // Delete the user
+        userRepository.deleteById(id);
+
+        return "User with ID " + id + " has been deleted successfully";
+    }
 }
