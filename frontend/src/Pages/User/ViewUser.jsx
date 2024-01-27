@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserNavbar from "../../Components/UserNavbar";
 export default function ViewUser() {
@@ -8,7 +8,9 @@ export default function ViewUser() {
     email: "",
     birthday: "",
   });
+  const [showModal, setShowModal] = useState(false);
 
+  const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {
     loadUser();
@@ -17,6 +19,24 @@ export default function ViewUser() {
   const loadUser = async () => {
     const result = await axios.get(`http://localhost:8080/user/${id}`);
     setUser(result.data);
+  };
+
+  const deleteUser = async () => {
+    await axios.delete(`http://localhost:8080/user/${id}`);
+    navigate("/login"); // Redirect to home after successful deletion
+  };
+  const handleDeleteConfirmation = () => {
+    console.log("delete button clicked");
+    setShowModal(true);
+  };
+
+  const handleDeleteCancel = () => {
+    setShowModal(false);
+  };
+
+  const handleDeleteConfirm = () => {
+    deleteUser();
+    setShowModal(false);
   };
   return (
     <div className="">
@@ -59,11 +79,27 @@ export default function ViewUser() {
               >
                 View exercises
               </Link>
-              <button className="btn btn-outline-danger ">Delete Profile</button>
+              <button
+                className="btn btn-outline-danger"
+                onClick={handleDeleteConfirmation}
+              >
+                Delete Profile
+              </button>
             </div>
           </div>
         </div>
       </div>
+      {showModal && (
+        <div className="popup">
+          <div className="popup-content">
+            <p>Are you sure you want to delete your account?</p>
+            <div>
+              <button className="btn btn-danger" onClick={handleDeleteConfirm}>Yes</button>
+              <button className="btn btn-outline-primary" onClick={handleDeleteCancel}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
