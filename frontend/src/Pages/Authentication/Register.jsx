@@ -21,18 +21,27 @@ export default function Register() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+  
+    // Check if any input field is empty
+    if (!username || !email || !password || !birthday) {
+      setErrorMessage("Please fill out all the fields.");
+      return;
+    }
+  
     try {
       const response = await axios.post("http://localhost:8080/addUser", user);
-
+  
       if (response.status === 201) {
         console.log("response: " + response.data);
         const user_id = response.data.id;
         navigate(`/${user_id}/sessions`);
       }
     } catch (error) {
-      setErrorMessage(error.response.data);
+      // Display specific error message for server-side validation or other errors
+      setErrorMessage(error.response.data || "An error occurred.");
     }
   };
+  
 
   return (
     <div>
