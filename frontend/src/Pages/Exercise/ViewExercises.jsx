@@ -8,7 +8,10 @@ export default function ViewExercises() {
   const [username, setUsername] = useState("");
   const [sessionDate, setSessionDate] = useState(""); // New state for session date
   const [measures, setMeasures] = useState({});
-
+  const [editableMeasures, setEditableMeasures] = useState({
+    weight: "",
+    height: "",
+  });
   const { user_id, session_id } = useParams();
 
   useEffect(() => {
@@ -24,8 +27,18 @@ export default function ViewExercises() {
       `http://localhost:8080/${user_id}/${session_id}/getMeasurements`
     );
     setMeasures(res.data);
+    setEditableMeasures({
+      weight: res.data.weight.toString(),
+      height: res.data.height.toString(),
+    });
   };
-
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditableMeasures({
+      ...editableMeasures,
+      [name]: value,
+    });
+  };
   const getUser = async () => {
     const res = await axios.get(`http://localhost:8080/user/${user_id}`);
     setUsername(res.data.username);
@@ -58,6 +71,25 @@ export default function ViewExercises() {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
+  const handleUpdateClick = async () => {
+    try {
+      const updatedMeasures = {
+        ...measures,
+        weight: parseFloat(editableMeasures.weight),
+        height: parseFloat(editableMeasures.height),
+      };
+
+      await axios.put(
+        `http://localhost:8080/${user_id}/${session_id}/updateMeasurements`,
+        updatedMeasures
+      );
+
+      // Update local measures state
+      setMeasures(updatedMeasures);
+    } catch (error) {
+      console.error("Error updating measurements:", error);
+    }
+  };
 
   return (
     <>
@@ -80,14 +112,13 @@ export default function ViewExercises() {
             Add exercise
           </Link>
           {Object.keys(measures).length === 0 && (
-    <Link
-      className="btn btn-outline-success mb-4 mx-3"
-      to={`/${user_id}/${session_id}/setMeasurements`}
-    >
-      Set your measurements for {formatDate(sessionDate)}
-    </Link>
-  )}
- 
+            <Link
+              className="btn btn-outline-success mb-4 mx-3"
+              to={`/${user_id}/${session_id}/setMeasurements`}
+            >
+              Set your measurements for {formatDate(sessionDate)}
+            </Link>
+          )}
 
           {exercises.length > 0 ? (
             <>
@@ -105,42 +136,64 @@ export default function ViewExercises() {
               </div>
             </>
           ) : (
-
             <p>You have no exercises on {formatDate(sessionDate)}</p>
-
           )}
           <div>
             <h3>Your measurements for today:</h3>
             {Object.keys(measures).length === 0 ? (
-            <p>You have not set your measurements for today yet.</p>
-          ) : (
-            <div className="d-flex gap-4">
-              <div>
-                <label className="mb-1">
-                  <small>Weight (kg)</small>
-                </label>
-                <input
-                  className="form-control"
-                  style={{ width: "5vw" }}
-                  type="number"
-                  value={measures.weight || ""}
-                  readOnly
-                />
+              <p>You have not set your measurements for today yet.</p>
+            ) : (
+              <div
+                className="card p-3 "
+                style={{
+                  width: "40vw",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <div className="d-flex gap-3 ">
+                <div className="d-flex gap-2 align-items-center">
+                    <label className="mb-1">
+                    <small><strong>Weight (kg): </strong></small>
+                    </label>
+                    <input
+                      className="form-control"
+                      style={{ width: "5vw" }}
+                      type="number"
+                      defaultValue={editableMeasures.weight}
+                      onChange={(e) =>
+                        setEditableMeasures({
+                          ...editableMeasures,
+                          weight: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="d-flex gap-2 align-items-center">
+                    <label className="d-flex">
+                      <small><strong>Height (m): </strong></small>
+                    </label>
+                    <input
+                      className="form-control"
+                      style={{ width: "5vw" }}
+                      type="number"
+                      defaultValue={editableMeasures.height}
+                      onChange={(e) =>
+                        setEditableMeasures({
+                          ...editableMeasures,
+                          height: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <button
+                    onClick={handleUpdateClick}
+                    className="btn btn-outline-primary"
+                  >
+                    Update
+                  </button>
+                </div>
               </div>
-              <div>
-                <label className="mb-1">
-                  <small>Height (m)</small>
-                </label>
-                <input
-                  className="form-control"
-                  style={{ width: "5vw" }}
-                  type="number"
-                  value={measures.height || ""}
-                  readOnly
-                />
-              </div>
-            </div>
-          )}
+            )}
           </div>
         </div>
       </div>
