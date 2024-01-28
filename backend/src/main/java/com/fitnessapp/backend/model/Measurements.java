@@ -4,13 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 public class Measurements {
     @Id
     private String measurement_id;
-
     private Long user_id;
 
     private Long weight;
@@ -26,6 +26,7 @@ public class Measurements {
 
     public void setMeasurement_id(String measurement_id) {
         this.measurement_id = measurement_id;
+
     }
 
     public Long getUser_id() {
@@ -58,6 +59,8 @@ public class Measurements {
 
     public void setMeasured_date(Date measured_date) {
         this.measured_date = measured_date;
+        setMeasurement_id(generateMeasurementId());
+
     }
 
     @Transient
@@ -72,5 +75,14 @@ public class Measurements {
 
     public void setBmi(Double bmi) {
         this.bmi = bmi;
+    }
+
+    private String generateMeasurementId() {
+        if (user_id != null && measured_date != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            String dateString = dateFormat.format(measured_date);
+            return user_id + dateString;
+        }
+        return null;
     }
 }

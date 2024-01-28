@@ -49,6 +49,7 @@ export default function SessionDashboard() {
         >
           Add exercise
         </Link>
+        
       </div>
       <p className="mt-3">Here are your exercise sessions:</p>
 

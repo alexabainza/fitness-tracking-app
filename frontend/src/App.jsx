@@ -14,6 +14,7 @@ import Login from "./Pages/Authentication/Login";
 import Register from "./Pages/Authentication/Register";
 import SessionDashboard from "./Pages/Session/SessionDashboard";
 import EditExercise from "./Pages/Exercise/EditExercise";
+import AddMeasurements from "./Pages/Measurements/AddMeasurements";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             element={<ViewExercise />}
           ></Route>
           <Route path="/:user_id/editExercise/:exercise_id" element={<EditExercise />}></Route>
+          <Route path="/:user_id/:session_id/setMeasurements" element={<AddMeasurements />}></Route>
 
         </Routes>
       </BrowserRouter>

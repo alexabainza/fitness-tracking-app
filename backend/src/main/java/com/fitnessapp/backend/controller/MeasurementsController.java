@@ -25,11 +25,15 @@ public class MeasurementsController {
 
     @PostMapping("/{id}/{session_id}/setMeasurements")
     ResponseEntity<?> newMeasurement(@RequestBody Measurements newMeasurement, @PathVariable Long id, @PathVariable String session_id) {
-        if (!userRepository.existsById(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with ID " + id + " not found.");
-        }
+        try {
+            if (!userRepository.existsById(id)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with ID " + id + " not found.");
+            }
 
-        Measurements savedMeasurement = measurementsRepository.save(newMeasurement);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedMeasurement);
+            Measurements savedMeasurement = measurementsRepository.save(newMeasurement);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedMeasurement);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 }
