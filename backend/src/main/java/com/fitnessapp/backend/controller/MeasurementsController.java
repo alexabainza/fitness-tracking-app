@@ -46,4 +46,31 @@ public class MeasurementsController {
         return measurementsRepository.findById(session_id).orElseThrow(()->new UserNotFoundException(user_id));
     }
 
-}
+    @PutMapping("/{user_id}/{session_id}/updateMeasurements")
+    ResponseEntity<?> updateMeasurement(@RequestBody Measurements updatedMeasurement, @PathVariable Long user_id, @PathVariable String session_id) {
+        try {
+            if (!userRepository.existsById(user_id)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with ID " + user_id + " not found.");
+            }
+
+            Measurements existingMeasurement = measurementsRepository.findById(session_id).orElse(null);
+
+            if (existingMeasurement == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Measurement with ID " + session_id + " not found.");
+            }
+
+
+            if (updatedMeasurement.getWeight() != null) {
+                existingMeasurement.setWeight(updatedMeasurement.getWeight());
+            }
+            if (updatedMeasurement.getHeight() != null) {
+                existingMeasurement.setHeight(updatedMeasurement.getHeight());
+            }
+
+            Measurements updatedMeasurementResult = measurementsRepository.save(existingMeasurement);
+            return ResponseEntity.ok(updatedMeasurementResult);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+
+}}
