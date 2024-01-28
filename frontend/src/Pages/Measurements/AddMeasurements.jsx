@@ -22,11 +22,13 @@ export default function AddMeasurements() {
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log("submit button clicked");
-  
-    if (!weight || !height) {
+    if (!measurements.weight || !measurements.height) {
       setErrorMessage("Please fill out all the fields.");
       return;
     }
+
+    // Reset error message if measurements are valid
+    setErrorMessage("");
   
     try {
 
@@ -40,6 +42,9 @@ export default function AddMeasurements() {
         height,
         weight
       }
+            // Log the data to be sent
+            console.log("Data to be sent:", measuredDetails);
+
       
       const response = await axios.post(`http://localhost:8080/${user_id}/${session_id}/setMeasurements`, measuredDetails)
   
@@ -87,6 +92,11 @@ export default function AddMeasurements() {
                 onChange={(e) => onInputChange(e)}
               ></input>
             </div>
+            {errorMessage && (
+              <div className="alert alert-danger mt-3" role="alert">
+                {errorMessage}
+              </div>
+            )}
             <button onClick={onSubmit} className="btn btn-outline-primary btn-block mt-3">Submit</button>
           </form>
         </div>

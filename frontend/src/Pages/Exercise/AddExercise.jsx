@@ -17,6 +17,8 @@ export default function AddExercise() {
     birthday: "",
   });
   const { id } = useParams();
+  const [errorMessage, setErrorMessage] = useState(""); // Added error message state
+
   const { exercise_name, repetitions, sets, date_of_exercise } = exercise;
   const loadUser = async () => {
     const result = await axios.get(`http://localhost:8080/user/${id}`);
@@ -31,6 +33,15 @@ export default function AddExercise() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (!exercise_name || !repetitions || !sets || !date_of_exercise) {
+      setErrorMessage("Please fill out all the fields.");
+      return;
+    }
+
+    setErrorMessage(""); // Reset error message if fields are not empty
+
+
     const formattedDate = new Date(exercise.date_of_exercise)
       .toISOString()
       .split("T")[0]
@@ -60,6 +71,11 @@ export default function AddExercise() {
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-4">Add Exercise</h2>
           <form onSubmit={(e) => onSubmit(e)}>
+          {errorMessage && (
+              <div className="alert alert-danger mb-3" role="alert">
+                {errorMessage}
+              </div>
+            )}
             <div className="mb-3">
               <label htmlFor="Exercise" className="form-label">
                 Exercise Name

@@ -13,8 +13,8 @@ public class Measurements {
     private String measurement_id;
     private Long user_id;
 
-    private Long weight;
-    private Long height;
+    private Double weight;
+    private Double height;
     private Date measured_date;
 
     @Transient
@@ -37,19 +37,19 @@ public class Measurements {
         this.user_id = user_id;
     }
 
-    public Long getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Long weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public Long getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(Long height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 
