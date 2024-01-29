@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
+import UserNavbar from "../../Components/UserNavbar";
 
 export default function AddMeasurements() {
   let navigate = useNavigate();
   const { user_id, session_id } = useParams();
+  const [username, setUsername] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
   const [measurements, setMeasurements] = useState({
@@ -19,6 +21,15 @@ export default function AddMeasurements() {
     setErrorMessage("");
   };
 
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = async () => {
+    const res = await axios.get(`http://localhost:8080/user/${user_id}`);
+    setUsername(res.data.username);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log("submit button clicked");
@@ -27,7 +38,6 @@ export default function AddMeasurements() {
       return;
     }
 
-    // Reset error message if measurements are valid
     setErrorMessage("");
   
     try {
@@ -42,7 +52,6 @@ export default function AddMeasurements() {
         height,
         weight
       }
-            // Log the data to be sent
             console.log("Data to be sent:", measuredDetails);
 
       
@@ -60,7 +69,7 @@ export default function AddMeasurements() {
 
   return (
     <div>
-      <Navbar />
+      <UserNavbar id={user_id} username={username}/>
 
       <div>
         <div className="col-md-4 offset-md-4 border rounded p-4 mt-2 shadow">
@@ -81,7 +90,7 @@ export default function AddMeasurements() {
             </div>
             <div className="mb-2">
               <label htmlFor="Height" className="form-label mb-1">
-                <small>Height in meters (m)</small>
+                <small>Height in centimeters (cm)</small>
               </label>
               <input
                 type="number"

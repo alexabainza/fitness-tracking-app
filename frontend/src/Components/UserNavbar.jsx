@@ -5,7 +5,7 @@ export default function UserNavbar({id, username}) {
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-danger navbar-dark px-5 d-flex justify-content-between">
-        <Link className="navbar-brand" to="/home">
+        <Link className="navbar-brand" to={`/${id}/sessions`}>
           <strong>Fitness App</strong>
         </Link>
         <div>

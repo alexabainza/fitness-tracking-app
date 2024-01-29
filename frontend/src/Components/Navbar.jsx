@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-danger navbar-dark px-5 d-flex justify-content-between">
-        <Link className="navbar-brand" to="/home">
+        <Link className="navbar-brand" to="/register">
           <strong>Fitness App</strong>
         </Link>
         <Link to="/register">

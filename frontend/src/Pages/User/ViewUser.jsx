@@ -63,8 +63,8 @@ export default function ViewUser() {
             </div>
           </div>
           <div className="d-flex justify-content-between">
-            <Link className="btn btn-primary my-2 me-2" to="/home">
-              Back to home
+            <Link className="btn btn-primary my-2 me-2" to={`/${id}/sessions`}>
+              Back to dashboard
             </Link>
             <div>
               <Link
