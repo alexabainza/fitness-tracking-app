@@ -19,24 +19,30 @@ export default function EditExercise() {
     setExercise({ ...exercise, [e.target.name]: e.target.value });
     updateSessionID(e.target.value);
   };
-
   const updateSessionID = (newDate) => {
-    const formattedDate = new Date(newDate)
-      .toISOString()
-      .split("T")[0]
-      .replace(/-/g, "");
-    const newSessionID = `${user_id}${formattedDate}`;
-    console.log("New Session ID:", newSessionID);
-
-    if (newDate !== exercise.date_of_exercise) {
-      setUpdatedSessionID(newSessionID);
+    const isValidDate = (dateString) => {
+      const regex = /^\d{4}-\d{2}-\d{2}$/;
+      return dateString.match(regex) !== null;
+    };
+  
+    if (isValidDate(newDate)) {
+      const formattedDate = new Date(newDate)
+        .toISOString()
+        .split("T")[0]
+        .replace(/-/g, "");
+      const newSessionID = `${user_id}${formattedDate}`;
+      console.log("New Session ID:", newSessionID);
+  
+      if (newDate !== exercise.date_of_exercise) {
+        setUpdatedSessionID(newSessionID);
+      } else {
+        setUpdatedSessionID(exercise.session_id);
+      }
+    } else {
+      console.error("Invalid date format");
     }
-    else{
-      setUpdatedSessionID(exercise.session_id)
-
-    }
-
   };
+  
   const [user, setUser] = useState({
     username: "",
     email: "",

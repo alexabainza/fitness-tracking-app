@@ -24,7 +24,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
 
-          <Route path="/home" element={<Home />}></Route>
+          {/* <Route path="/home" element={<Home />}></Route> */}
           <Route path="/:id/sessions" element={<SessionDashboard />}></Route>
           <Route path="/editUser/:id" element={<EditUser />}></Route>
           <Route path="/viewUser/:id" element={<ViewUser />}></Route>
